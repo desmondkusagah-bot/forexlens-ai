@@ -1,0 +1,23 @@
+{
+  "overview": "ForexLens AI is a forex chart analysis app that uses AI to analyze uploaded chart images from MT4, MT5, TradingView, and other platforms. It sets entry points, stop losses, and take profits, displays annotated results, tracks analysis history, shows live prices for detected currency pairs, and visualizes historical risk/reward trends.",
+  "features": [
+    "AI-powered forex chart analysis from uploaded images",
+    "Entry point, stop loss, and 5 take profit levels",
+    "Live price feed for detected currency pairs via Finnhub",
+    "Trade notes and journaling on each analysis",
+    "Historical risk/reward trend chart on dashboard",
+    "Full analysis history with pagination",
+    "Internet Identity authentication"
+  ],
+  "category": "finance",
+  "tags": [
+    "forex",
+    "trading",
+    "ai-analysis",
+    "chart-analysis",
+    "price-feed",
+    "risk-reward",
+    "journaling"
+  ],
+  "last_updated": "2026-05-20T02:48:36.287Z"
+}

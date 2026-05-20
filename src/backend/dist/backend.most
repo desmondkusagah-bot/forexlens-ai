@@ -1,0 +1,69 @@
+// Version: 3.0.0
+type AnalysisId__767105845 = Nat;
+type Analysis__841008833 =
+  {
+    createdAt : Int;
+    entryPrice : Float;
+    id : AnalysisId__767105845;
+    imageKey : Text;
+    notes : Text;
+    owner : UserId__981418688;
+    platform : ?Platform__774211917;
+    riskReward : Float;
+    stopLoss : Float;
+    summary : Text;
+    takeProfits : TakeProfits__761326550
+  };
+type Data__80296667<K, V> =
+  {var count : Nat__1040412405; kvs : [var ?(K, V)]};
+type Internal__41346355<K, V> =
+  {children : [var ?Node__1000929467<K, V>]; data : Data__80296667<K, V>};
+type Leaf__712614010<K, V> = {data : Data__80296667<K, V>};
+type Map__222667396<K, V> = Map__912772452<K, V>;
+type Map__709709801<K, V> =
+  {var root : Node__1000929467<K, V>; var size : Nat__1040412405};
+type Map__912772452<K, V> = Map__709709801<K, V>;
+type Nat__1040412405 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__1000929467<K, V> =
+  {#internal : Internal__41346355<K, V>; #leaf : Leaf__712614010<K, V>};
+type OldAnalysisId__612701739 = Nat;
+type OldAnalysis__561583123 =
+  {
+    createdAt : Int;
+    entryPrice : Float;
+    id : OldAnalysisId__612701739;
+    imageKey : Text;
+    owner : OldUserId__580276348;
+    platform : ?OldPlatform__7799375;
+    riskReward : Float;
+    stopLoss : Float;
+    summary : Text;
+    takeProfits : OldTakeProfits__618657645
+  };
+type OldPlatform__7799375 = Text;
+type OldTakeProfits__618657645 =
+  {tp1 : Float; tp2 : Float; tp3 : Float; tp4 : Float; tp5 : Float};
+type OldUserId__580276348 = Principal;
+type Platform__774211917 = Text;
+type TakeProfits__761326550 =
+  {tp1 : Float; tp2 : Float; tp3 : Float; tp4 : Float; tp5 : Float};
+type UserId__981418688 = Principal;
+actor ({
+  in analysisCounter : {var nextId : Nat};
+  in analysisStore :
+    Map__222667396<OldAnalysisId__612701739, OldAnalysis__561583123>;
+  in openAIKeys : Map__222667396<Principal, Text>
+}, {
+  stable analysisCounter : {var nextId : Nat};
+  stable analysisStore :
+    {
+      var root : Node__1000929467<AnalysisId__767105845, Analysis__841008833>;
+      var size : Nat__1040412405
+    };
+  stable openAIKeys :
+    {
+      var root : Node__1000929467<Principal, Text>;
+      var size : Nat__1040412405
+    }
+});

@@ -1,0 +1,105 @@
+type http_request_result = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type http_header = 
+ record {
+   name: text;
+   value: text;
+ };
+type UserId = principal;
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: http_request_result;
+ };
+type TakeProfits = 
+ record {
+   tp1: float64;
+   tp2: float64;
+   tp3: float64;
+   tp4: float64;
+   tp5: float64;
+ };
+type Platform = text;
+type Page = 
+ record {
+   items: vec AnalysisSummary;
+   limit: nat;
+   offset: nat;
+   total: nat;
+ };
+type AnalyzeRequest = 
+ record {
+   imageKey: text;
+   imageUrl: text;
+   platform: opt Platform;
+ };
+type AnalysisSummary = 
+ record {
+   createdAt: int;
+   entryPrice: float64;
+   id: AnalysisId;
+   imageKey: text;
+   notes: text;
+   platform: opt Platform;
+   riskReward: float64;
+   stopLoss: float64;
+   takeProfits: TakeProfits;
+ };
+type AnalysisId = nat;
+type Analysis = 
+ record {
+   createdAt: int;
+   entryPrice: float64;
+   id: AnalysisId;
+   imageKey: text;
+   notes: text;
+   owner: UserId;
+   platform: opt Platform;
+   riskReward: float64;
+   stopLoss: float64;
+   summary: text;
+   takeProfits: TakeProfits;
+ };
+service : {
+  analyzeChart: (req: AnalyzeRequest) ->
+   (variant {
+      err: variant {
+             analysisError: text;
+             noApiKey;
+           };
+      ok: Analysis;
+    });
+  clearMyOpenAIApiKey: () -> (variant {ok;});
+  deleteAnalysis: (id: AnalysisId) ->
+   (variant {
+      err: variant {notFound;};
+      ok;
+    });
+  getAnalysis: (id: AnalysisId) ->
+   (variant {
+      err: variant {notFound;};
+      ok: Analysis;
+    }) query;
+  getLivePrice: (symbol: text) -> (variant {
+                                     err: text;
+                                     ok: float64;
+                                   });
+  isMyOpenAIConfigured: () -> (bool) query;
+  listAnalyses: (offset: nat, limit: nat) -> (variant {ok: Page;}) query;
+  setMyOpenAIApiKey: (key: text) -> (variant {ok;});
+  transform: (input: TransformationInput) -> (TransformationOutput) query;
+  updateNotes: (id: AnalysisId, notes: text) -> (variant {
+                                                   err: text;
+                                                   ok;
+                                                 });
+}
